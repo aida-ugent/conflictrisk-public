@@ -1,4 +1,4 @@
-function [riskM, Gm, M] = para4Measure(m, L)
+function [riskM, AGm, M] = para4Measure(m, L)
 
 % para4Measure.m
 
@@ -19,22 +19,22 @@ function [riskM, Gm, M] = para4Measure(m, L)
     if m == 1
         % internal conflict
         riskM = trace(inv(L+I)*L*L*inv(L+I));
-        Gm = 2*inv(L+I)^2 - 2*inv(L+I)^3;
+        AGm = 2*inv(L+I)^2 - 2*inv(L+I)^3;
         M = inv(L+I)*L*L*inv(L+I); 
     elseif m == 2
         % external conflict
         riskM = trace(inv(L+I)*L*inv(L+I));
-        Gm = -inv(L+I)^2 + 2*inv(L+I)^3;
+        AGm = -inv(L+I)^2 + 2*inv(L+I)^3;
         M = inv(L+I)*L*inv(L+I); 
     elseif m == 3
         % controversy
         riskM = trace(inv(L+I)*inv(L+I));
-        Gm = -2*inv(L+I)^3;
+        AGm = -2*inv(L+I)^3;
         M = inv(L+I)*inv(L+I);
     else
         % resistance
         riskM = trace(inv(L+I));
-        Gm = -inv(L+I)^2;
+        AGm = -inv(L+I)^2;
         M = inv(L+I);
     end
 end
