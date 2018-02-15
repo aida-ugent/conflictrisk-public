@@ -33,6 +33,8 @@ function [OptA, acr, wcr, conflicts] = ConflictRiskOptimization(A, ms, grad, avg
 L = diag(sum(A)) - A;
 n = size(A,1);
 I = eye(n);
+e = ones(n,1);
+J = e*e'; % J is the all one matrix
 [acr0,~,~] = para4Measure(ms, L); % risk for measure m at for the original network
 conflict0 = actualConflict(ms,L); % for the three internal opinion vectors
 
@@ -45,6 +47,7 @@ for i = 1:iter
         
         % 1. find the current WCR when optimizing the ACR
         [~, ~, M] = para4Measure(ms, L);
+        M = (I-J/n)*M*(I-J/n); % to make the opinion vecter have 0 mean
         cvx_begin
             variable X(n,n) symmetric
             maximize sum(sum(X.*M))
@@ -120,6 +123,7 @@ for i = 1:iter
         % for worst case s, optimise the worst case tr(s'*M*s) over L
         % First solve maxcut problem to find worst-case binary opinion vector, 
         % or a set of approximately worst-case binary opinion vectors:
+        M = (I-J/n)*M*(I-J/n); 
         cvx_begin
             variable X(n,n) symmetric
             maximize sum(sum(X.*M))
@@ -131,6 +135,7 @@ for i = 1:iter
         V = sign(C*randn(size(C,2),dim)); % relaxation
         values = [values; cvx_optval max(diag(V'*M*V))];
         
+        V = (I-J/n)*V;
         % then the minimization problem
         if grad
             % Optimize WCR using projected gradient descent
