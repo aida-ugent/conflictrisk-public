@@ -17,8 +17,12 @@ function conflict = actualConflict(m,L)
 %       conflict - the real conflict for the three internal opinion vectors
     
     n = size(L,1);
+    I = eye(n);
+    e = ones(n,1);
+    J = e*e';
     conflict = zeros(1,3); 
     [~, ~, Mconf] = para4Measure(m, L);
+    Mconf = (I-J/n)*Mconf*(I-J/n);
     s1= randn(n,1); 
     for i=1:n
         if s1(i) > 0

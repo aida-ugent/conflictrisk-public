@@ -194,6 +194,7 @@ end
 OptA = A;
 acr = [acr0;acrs'];
 wcr = values(:,2);
+conflicts = [conflict0;conflicts];
 end
 
 
