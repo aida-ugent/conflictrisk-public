@@ -6,4 +6,6 @@ You will need cvx to run it.
 
 demo_Optimization.m is the demo file, but you will need the adjacency matrix of an undirected network to be loaded. Then you can set your own parameters.
 
-Detailed descriptions are commented in the files. 
+Detailed descriptions are commented in the files.
+
+A short introduction video: https://www.youtube.com/watch?v=LT2ALCeG0S8&t=3s.
